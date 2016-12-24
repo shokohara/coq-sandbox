@@ -39,3 +39,166 @@ Proof.
   intros.
   apply (H0 (H H1)).
 Qed.
+
+Inductive list (A : Type) : Type :=
+| nil : list A
+| cons : A -> list A -> list A.
+
+Inductive False : Prop :=.
+
+Definition not (A : Prop) := A -> False.
+
+Goal forall P : Prop, P -> ~~P.
+  intros.
+  intro.
+  apply H0.
+  apply H.
+Qed.
+  
+Goal forall P : Prop, P -> ~~P.
+  unfold not.
+  intros.
+  intro.
+  apply H0.
+  apply H.
+Qed.
+
+(*
+Goal forall P : Prop, P -> not (not P).
+  intros.
+  intro.
+  apply H0.
+  apply H.
+Qed.
+ *)
+
+Inductive or (A B : Prop) : Prop :=
+  | or_introl : A -> or A B
+  | or_intror : B -> or A B.
+
+(*
+Goal forall (P Q : Prop), P \/ Q -> Q \/ P.
+  intros.
+  case H.
+  apply or_intror.
+  apply or_introl.
+Qed.
+*)
+
+Goal forall (P Q : Prop), P \/ Q -> Q \/ P.
+  intros.
+  destruct H.
+  right.
+  apply H.
+  left.
+  apply H.
+Qed.
+
+Inductive and (A B : Prop) : Prop :=
+  conj : A -> B -> and A B.
+
+(*
+Goal forall (P Q : Prop), P /\ Q -> Q /\ P.
+  intros.
+  destruct H.
+  apply conj.
+ *)
+
+Goal forall (P Q : Prop), P /\ Q -> Q /\ P.
+  intros.
+  destruct H.
+  split.
+  apply H0.
+  apply H.
+Qed.
+
+Goal forall (P : Prop), P -> ~~P.
+  auto.
+Qed.
+
+Goal forall (P Q : Prop), P \/ Q -> Q \/ P.
+  tauto.
+Qed.
+
+Goal forall (P Q : Prop), P /\ Q -> Q /\ P.
+  tauto.
+Qed.
+
+Goal forall (P : Prop), ~(P /\ ~P).
+  intros.
+  intro.
+  destruct H.
+  apply H0.
+  apply H.
+Qed.
+
+Goal forall (P Q : Prop), ~P \/ ~Q -> ~(P /\ Q).
+  intros.
+  intro.
+  destruct H.
+  apply H.
+  destruct H0.
+  apply H0.
+  apply H.
+  destruct H0.
+  apply H1.
+Qed.
+
+(*
+Goal forall (P : Prop), (forall (P : Prop), ~~P -> P) -> P \/ ~P.
+  intros.
+  left.
+  apply (H P).
+  intro.
+  apply H0.
+  apply (H P).
+  intro.
+  apply (H0).
+ *)
+
+(*
+Goal forall (P : Prop), (forall (P : Prop), ~~P -> P) -> P \/ ~P.
+  intros.
+  left.
+  apply H.
+  intro.
+  apply H0.
+  apply (H P).
+  intro.
+  apply (H (~P)).
+ *)
+
+(*
+Goal forall (P : Prop), (forall (P : Prop), ~~P -> P) -> P \/ ~P.
+  intros.
+  left.
+  apply (H P).
+  intro.
+  apply H0.
+  apply H.
+  apply (H (~~P)).
+  intro.
+  apply 
+ *)
+
+(*
+Goal forall (P : Prop), (forall (P : Prop), ~~P -> P) -> P \/ ~P.
+  unfold not.
+  intros.
+  apply H.
+Qed.
+ *)
+
+Goal forall (P : Prop), (forall (P : Prop), ~~P -> P) -> P \/ ~P.
+  intros.
+  apply (H (P \/ (~P))).
+  intros.
+  intro.
+  apply H0.
+  intros.
+  right.
+  intro.
+  apply H0.
+  left.
+  apply H1.
+Qed.

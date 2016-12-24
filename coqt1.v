@@ -19,4 +19,23 @@ Definition prop2 : forall (A B : Prop), A -> (A -> B) -> B := fun A B a b => b a
 
 (*
 Definition prop3 : forall (A B C : Prop), ((A -> B) -> C) -> ((B -> A) -> C) := fun
-*)
+ *)
+
+(*
+Goal forall (A B C : Prop), ((A -> B) -> C) -> ((B -> A) -> C).
+  intros.
+  apply H.
+  intro.
+ *)
+
+(*
+Goal forall (A B C : Prop), ((A -> B) -> C) -> ((B -> A) -> C) := fun A B C D (a b) (c d) =>
+ *)
+
+Definition problem0 : forall (A B : Prop), A -> (A -> B) -> B :=
+  fun A B x f => f x.
+
+(*
+Definition problem1 : forall (A B C : Prop), (A -> B -> C) -> (B -> A -> C) :=
+  fun A B C f b a => f a b.
+ *)                      
